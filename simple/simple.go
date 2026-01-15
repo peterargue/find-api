@@ -26,7 +26,7 @@ func NewService(client Client) *Service {
 
 // Block represents a Flow blockchain block
 type Block struct {
-	Height       int             `json:"height"`
+	Height       uint64          `json:"height"`
 	ID           string          `json:"id"`
 	Timestamp    string          `json:"timestamp"`
 	Transactions []TransactionID `json:"transactions"`
@@ -45,7 +45,7 @@ type BlocksResponse struct {
 
 // Event represents a Flow blockchain event
 type Event struct {
-	BlockHeight     int                    `json:"block_height"`
+	BlockHeight     uint64                 `json:"block_height"`
 	EventIndex      int                    `json:"event_index"`
 	Name            string                 `json:"name"`
 	Timestamp       string                 `json:"timestamp"`
@@ -61,7 +61,7 @@ type EventsResponse struct {
 // Transaction represents a Flow blockchain transaction
 type Transaction struct {
 	ID                     string                 `json:"id"`
-	BlockHeight            int                    `json:"block_height"`
+	BlockHeight            uint64                 `json:"block_height"`
 	BlockID                string                 `json:"block_id"`
 	Timestamp              string                 `json:"timestamp"`
 	Payer                  string                 `json:"payer"`
@@ -113,7 +113,7 @@ type TransactionEventsResponse struct {
 // BlocksRequestBuilder builds a request to get blocks
 type BlocksRequestBuilder struct {
 	service *Service
-	height  int
+	height  uint64
 	offset  *int
 }
 
@@ -123,7 +123,7 @@ func (s *Service) GetBlocks() *BlocksRequestBuilder {
 }
 
 // Height sets the block height (required)
-func (b *BlocksRequestBuilder) Height(height int) *BlocksRequestBuilder {
+func (b *BlocksRequestBuilder) Height(height uint64) *BlocksRequestBuilder {
 	b.height = height
 	return b
 }
@@ -143,7 +143,7 @@ func (b *BlocksRequestBuilder) Do(ctx context.Context) (*BlocksResponse, error) 
 	}
 
 	query := url.Values{}
-	query.Set("height", strconv.Itoa(b.height))
+	query.Set("height", strconv.FormatUint(b.height, 10))
 	if b.offset != nil {
 		query.Set("offset", strconv.Itoa(*b.offset))
 	}
@@ -165,8 +165,8 @@ func (b *BlocksRequestBuilder) Do(ctx context.Context) (*BlocksResponse, error) 
 type EventsRequestBuilder struct {
 	service    *Service
 	name       string
-	fromHeight int
-	toHeight   int
+	fromHeight uint64
+	toHeight   uint64
 	offset     *int
 }
 
@@ -182,13 +182,13 @@ func (b *EventsRequestBuilder) Name(name string) *EventsRequestBuilder {
 }
 
 // FromHeight sets the starting block height (required)
-func (b *EventsRequestBuilder) FromHeight(height int) *EventsRequestBuilder {
+func (b *EventsRequestBuilder) FromHeight(height uint64) *EventsRequestBuilder {
 	b.fromHeight = height
 	return b
 }
 
 // ToHeight sets the ending block height (required)
-func (b *EventsRequestBuilder) ToHeight(height int) *EventsRequestBuilder {
+func (b *EventsRequestBuilder) ToHeight(height uint64) *EventsRequestBuilder {
 	b.toHeight = height
 	return b
 }
@@ -214,8 +214,8 @@ func (b *EventsRequestBuilder) Do(ctx context.Context) (*EventsResponse, error) 
 
 	query := url.Values{}
 	query.Set("name", b.name)
-	query.Set("from_height", strconv.Itoa(b.fromHeight))
-	query.Set("to_height", strconv.Itoa(b.toHeight))
+	query.Set("from_height", strconv.FormatUint(b.fromHeight, 10))
+	query.Set("to_height", strconv.FormatUint(b.toHeight, 10))
 	if b.offset != nil {
 		query.Set("offset", strconv.Itoa(*b.offset))
 	}

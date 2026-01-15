@@ -31,8 +31,8 @@ func main() {
 
 	// Query events by name within a block range
 	eventName := "A.1654653399040a61.FlowToken.TokensWithdrawn"
-	fromHeight := 85000000
-	toHeight := 85000100
+	fromHeight := uint64(85000000)
+	toHeight := uint64(85000100)
 
 	fmt.Printf("Fetching events: %s\n", eventName)
 	fmt.Printf("Block range: %d to %d\n\n", fromHeight, toHeight)

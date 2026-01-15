@@ -29,7 +29,7 @@ func main() {
 	ctx := context.Background()
 
 	// Get blocks at a specific height
-	height := 96708412
+	height := uint64(96708412)
 	fmt.Printf("Fetching blocks at height %d...\n\n", height)
 
 	blocks, err := client.Simple.GetBlocks().

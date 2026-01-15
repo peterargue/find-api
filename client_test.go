@@ -43,12 +43,12 @@ func TestClient_RateLimitHandling(t *testing.T) {
 		// Second request succeeds
 		resp := struct {
 			Blocks []struct {
-				Height int    `json:"height"`
+				Height uint64 `json:"height"`
 				ID     string `json:"id"`
 			} `json:"blocks"`
 		}{
 			Blocks: []struct {
-				Height int    `json:"height"`
+				Height uint64 `json:"height"`
 				ID     string `json:"id"`
 			}{
 				{Height: 96708412, ID: "abc123"},
