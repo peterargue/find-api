@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/peterargue/find-api/auth"
+	"github.com/peterargue/find-api/flow"
 	"github.com/peterargue/find-api/simple"
 )
 
@@ -34,6 +35,7 @@ type Client struct {
 	// Services
 	Simple *simple.Service
 	Auth   *auth.Service
+	Flow   *flow.Service
 }
 
 // ClientOption is a functional option for configuring the Client
@@ -72,6 +74,7 @@ func NewClient(username, password string, opts ...ClientOption) *Client {
 	// Initialize services
 	c.Simple = simple.NewService(c)
 	c.Auth = auth.NewService(c, username, password)
+	c.Flow = flow.NewService(c)
 
 	return c
 }
