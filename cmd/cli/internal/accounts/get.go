@@ -30,7 +30,7 @@ func (r *accountResult) String() string {
 	fmt.Fprintf(&buf, "Flow Balance:      %s\n", strconv.FormatFloat(a.FlowBalance, 'f', -1, 64))
 	fmt.Fprintf(&buf, "Storage Used:      %s\n", strconv.FormatFloat(a.StorageUsed, 'f', -1, 64))
 	fmt.Fprintf(&buf, "Storage Available: %s\n", strconv.FormatFloat(a.StorageAvailable, 'f', -1, 64))
-	if a.Find != nil {
+	if a.Find != nil && a.Find.Name != "" {
 		fmt.Fprintf(&buf, "Find Name:         %s\n", a.Find.Name)
 	}
 	fmt.Fprintf(&buf, "Contracts:         %v\n", a.Contracts)
