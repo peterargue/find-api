@@ -55,6 +55,17 @@ func WithBaseURL(baseURL string) ClientOption {
 	}
 }
 
+// WithToken pre-loads a JWT token, skipping the Basic Auth credential flow.
+// Used by the CLI to inject a stored token without needing credentials.
+func WithToken(token string, exp int64) ClientOption {
+	return func(c *Client) {
+		c.tokenMu.Lock()
+		c.accessToken = token
+		c.tokenExpiry = time.Unix(exp, 0)
+		c.tokenMu.Unlock()
+	}
+}
+
 // NewClient creates a new FindLabs API client
 func NewClient(username, password string, opts ...ClientOption) *Client {
 	c := &Client{
