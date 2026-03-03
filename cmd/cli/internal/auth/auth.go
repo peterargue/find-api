@@ -26,6 +26,7 @@ func (r *loginResult) Oneliner() string { return r.expiry }
 func (r *loginResult) JSON() any        { return map[string]any{"token_expiry": r.expiry} }
 
 var loginCmd = &command.Command{
-	Cmd: loginCobra,
-	Run: runLogin,
+	Cmd:   loginCobra,
+	Flags: loginFlagsVal,
+	Run:   runLogin,
 }
