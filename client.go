@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"net/url"
 	"sync"
 	"time"
@@ -52,6 +53,17 @@ func WithHTTPClient(httpClient *http.Client) ClientOption {
 func WithBaseURL(baseURL string) ClientOption {
 	return func(c *Client) {
 		c.baseURL = baseURL
+	}
+}
+
+// WithToken pre-loads a JWT token, skipping the Basic Auth credential flow.
+// Used by the CLI to inject a stored token without needing credentials.
+func WithToken(token string, exp int64) ClientOption {
+	return func(c *Client) {
+		c.tokenMu.Lock()
+		c.accessToken = token
+		c.tokenExpiry = time.Unix(exp, 0)
+		c.tokenMu.Unlock()
 	}
 }
 
@@ -246,19 +258,28 @@ func (c *Client) DecodeResponse(resp *http.Response, v any) error {
 func (c *Client) decodeResponse(resp *http.Response, v any) error {
 	defer resp.Body.Close()
 
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("failed to read response: %w", err)
+	}
+
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		body, _ := io.ReadAll(resp.Body)
 		return &APIError{
 			StatusCode: resp.StatusCode,
 			Message:    string(body),
 		}
 	}
 
+	// Dump raw response when FIND_DEBUG=1 to help diagnose field mapping issues.
+	if os.Getenv("FIND_DEBUG") == "1" {
+		fmt.Fprintf(os.Stderr, "[debug] %s %s\n%s\n", resp.Request.Method, resp.Request.URL, body)
+	}
+
 	if v == nil {
 		return nil
 	}
 
-	if err := json.NewDecoder(resp.Body).Decode(v); err != nil {
+	if err := json.Unmarshal(body, v); err != nil {
 		return fmt.Errorf("failed to decode response: %w", err)
 	}
 

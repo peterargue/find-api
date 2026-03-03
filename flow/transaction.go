@@ -68,7 +68,7 @@ type TransactionDetails struct {
 	Imports          []ImportOutput     `json:"imports"`
 	Payer            string             `json:"payer"`
 	Proposer         string             `json:"proposer"`
-	Script           string             `json:"script"`
+	Script           string             `json:"transaction_body"`
 	Status           string             `json:"status"`
 	SurgeFactor      float64            `json:"surge_factor"`
 	Tags             []Tag              `json:"tags"`
@@ -83,11 +83,11 @@ type ArgumentItem struct {
 
 // EventOutput represents an event in transaction details
 type EventOutput struct {
-	Data             map[string]interface{} `json:"data"`
+	Fields           map[string]interface{} `json:"fields"`
 	EventIndex       int                    `json:"event_index"`
 	TransactionID    string                 `json:"transaction_id"`
 	TransactionIndex int                    `json:"transaction_index"`
-	Type             string                 `json:"type"`
+	Name             string                 `json:"name"`
 }
 
 // EvmTransactions represents EVM transaction information
@@ -307,8 +307,9 @@ func (b *TransactionsRequestBuilder) Do(ctx context.Context) (*TransactionsRespo
 
 // TransactionRequestBuilder builds a request to get a specific transaction
 type TransactionRequestBuilder struct {
-	service *Service
-	id      string
+	service       *Service
+	id            string
+	includeEvents *bool
 }
 
 // GetTransaction creates a new transaction request builder
@@ -322,6 +323,12 @@ func (b *TransactionRequestBuilder) ID(id string) *TransactionRequestBuilder {
 	return b
 }
 
+// IncludeEvents sets whether to include full event data in the response (optional, default false)
+func (b *TransactionRequestBuilder) IncludeEvents(include bool) *TransactionRequestBuilder {
+	b.includeEvents = &include
+	return b
+}
+
 // Do executes the transaction request
 func (b *TransactionRequestBuilder) Do(ctx context.Context) (*TransactionResponse, error) {
 	if b.id == "" {
@@ -329,7 +336,14 @@ func (b *TransactionRequestBuilder) Do(ctx context.Context) (*TransactionRespons
 	}
 
 	path := fmt.Sprintf("/flow/v1/transaction/%s", b.id)
-	resp, err := b.service.client.DoRequest(ctx, http.MethodGet, path, nil)
+
+	var query url.Values
+	if b.includeEvents != nil {
+		query = url.Values{}
+		query.Set("include_events", strconv.FormatBool(*b.includeEvents))
+	}
+
+	resp, err := b.service.client.DoRequest(ctx, http.MethodGet, path, query)
 	if err != nil {
 		return nil, err
 	}

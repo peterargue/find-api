@@ -23,12 +23,11 @@ type FungibleToken struct {
 	FlowtyID          string  `json:"flowty_id"`
 	Icon              string  `json:"icon"`
 	IconURL           string  `json:"icon_url"`
-	ID                string  `json:"id"`
 	Name              string  `json:"name"`
-	Path              interface{} `json:"path"`
+	Path              map[string]string `json:"path"`
 	Symbol            string  `json:"symbol"`
 	Tags              string  `json:"tags"`
-	Token             string  `json:"token"`
+	Token             string  `json:"id"`
 	Twitter           string  `json:"twitter"`
 	Website           string  `json:"website"`
 }

@@ -261,7 +261,7 @@ func (b *EvmTransactionRequestBuilder) Hash(hash string) *EvmTransactionRequestB
 }
 
 // Do executes the EVM transaction request
-func (b *EvmTransactionRequestBuilder) Do(ctx context.Context) (*EvmTransactionResponse, error) {
+func (b *EvmTransactionRequestBuilder) Do(ctx context.Context) (*EvmTransaction, error) {
 	if b.hash == "" {
 		return nil, fmt.Errorf("transaction hash is required")
 	}
@@ -272,10 +272,13 @@ func (b *EvmTransactionRequestBuilder) Do(ctx context.Context) (*EvmTransactionR
 		return nil, err
 	}
 
-	var txResp EvmTransactionResponse
-	if err := b.service.client.DecodeResponse(resp, &txResp); err != nil {
+	var wrapped EvmTransactionResponse
+	if err := b.service.client.DecodeResponse(resp, &wrapped); err != nil {
 		return nil, err
 	}
+	if len(wrapped.Data) == 0 {
+		return nil, fmt.Errorf("EVM transaction not found")
+	}
 
-	return &txResp, nil
+	return &wrapped.Data[0], nil
 }

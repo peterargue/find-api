@@ -19,8 +19,8 @@ type NFTCollection struct {
 	FlowtyID     string `json:"flowty_id"`
 	Logo         string `json:"logo"`
 	Name         string `json:"name"`
-	NFTType      string `json:"nft_type"`
-	Path         interface{} `json:"path"`
+	NFTType      string            `json:"id"`
+	Path         map[string]string `json:"path"`
 	Twitter      string `json:"twitter"`
 	Website      string `json:"website"`
 }
@@ -72,9 +72,10 @@ type NFTTransfersResponse struct {
 
 // NFTHolding represents an NFT holding
 type NFTHolding struct {
-	Address string `json:"address"`
-	Balance int    `json:"balance"`
-	NFTType string `json:"nft_type"`
+	Owner   string  `json:"owner"`
+	Count   int     `json:"count"`
+	Percentage float64 `json:"percentage"`
+	NFTType string  `json:"nft_type"`
 }
 
 // NFTHoldingResponse represents the response from the NFT holdings endpoint

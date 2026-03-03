@@ -12,7 +12,8 @@ import (
 type Contract struct {
 	Address      string `json:"address"`
 	BlockHeight  uint64 `json:"block_height"`
-	ContractName string `json:"contract_name"`
+	ContractName string `json:"name"`
+	ID           string `json:"id"`
 	Identifier   string `json:"identifier"`
 }
 

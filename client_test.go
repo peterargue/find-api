@@ -9,6 +9,19 @@ import (
 	"time"
 )
 
+func TestWithToken(t *testing.T) {
+	exp := time.Now().Add(time.Hour).Unix()
+	c := NewClient("", "", WithToken("mytoken", exp))
+	c.tokenMu.RLock()
+	defer c.tokenMu.RUnlock()
+	if c.accessToken != "mytoken" {
+		t.Errorf("expected accessToken=%q, got %q", "mytoken", c.accessToken)
+	}
+	if c.tokenExpiry.Unix() != exp {
+		t.Errorf("expected expiry=%d, got %d", exp, c.tokenExpiry.Unix())
+	}
+}
+
 func TestClient_RateLimitHandling(t *testing.T) {
 	retryCount := 0
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

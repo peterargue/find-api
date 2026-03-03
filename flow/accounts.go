@@ -47,13 +47,12 @@ type VaultInfo struct {
 
 // KeyInfo represents account key information
 type KeyInfo struct {
-	Index          string `json:"index"`
-	PublicKey      string `json:"publicKey"`
-	SignAlgo       string `json:"signAlgo"`
-	HashAlgo       string `json:"hashAlgo"`
-	Weight         int    `json:"weight"`
-	SequenceNumber int    `json:"sequenceNumber"`
-	Revoked        bool   `json:"revoked"`
+	Index    string `json:"index"`
+	Key      string `json:"key"`
+	SignAlgo string `json:"signatureAlgorithm"`
+	HashAlgo string `json:"hashAlgorithm"`
+	Weight   int    `json:"weight"`
+	Revoked  bool   `json:"revoked"`
 }
 
 // Domains represents domain information
@@ -122,11 +121,11 @@ type AccountTransaction struct {
 	GasUsed         int                    `json:"gas_used"`
 	Payer           string                 `json:"payer"`
 	Proposer        string                 `json:"proposer"`
-	Roles           []interface{}          `json:"roles"`
-	Status          string                 `json:"status"`
-	Timestamp       string                 `json:"timestamp"`
-	TransactionHash string                 `json:"transaction_hash"`
-	TransactionID   string                 `json:"transaction_id"`
+	Roles           []string `json:"roles"`
+	Status          string   `json:"status"`
+	Timestamp       string   `json:"timestamp"`
+	TransactionHash string   `json:"transaction_body_hash"`
+	TransactionID   string   `json:"id"`
 }
 
 // AccountTransactionsResponse represents the response from the account transactions endpoint

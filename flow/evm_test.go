@@ -208,16 +208,11 @@ func TestFlowService_GetEvmTransaction(t *testing.T) {
 		t.Fatalf("GetEvmTransaction failed: %v", err)
 	}
 
-	if len(result.Data) != 1 {
-		t.Errorf("Expected 1 transaction, got %d", len(result.Data))
+	if result.Hash != hash {
+		t.Errorf("Expected hash %s, got %s", hash, result.Hash)
 	}
-
-	tx := result.Data[0]
-	if tx.Hash != hash {
-		t.Errorf("Expected hash %s, got %s", hash, tx.Hash)
-	}
-	if tx.BlockNumber != 96708412 {
-		t.Errorf("Expected block number 96708412, got %d", tx.BlockNumber)
+	if result.BlockNumber != 96708412 {
+		t.Errorf("Expected block number 96708412, got %d", result.BlockNumber)
 	}
 }
 

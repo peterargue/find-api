@@ -171,13 +171,13 @@ func TestFlowService_GetFTTransfers(t *testing.T) {
 		resp := TransfersResponse{
 			Data: []FTTransfer{
 				{
-					Amount:        100.5,
-					BlockHeight:   96708412,
-					Direction:     "withdraw",
-					Sender:        "0x1234",
-					Receiver:      "0x5678",
-					Token:         FTTransferTokenDetails{Token: "A.1654653399040a61.FlowToken.Vault"},
-					TransactionID: "abc123",
+					Amount:          100.5,
+					BlockHeight:     96708412,
+					Direction:       "withdraw",
+					Sender:          "0x1234",
+					Receiver:        "0x5678",
+					Token:           FTTransferTokenDetails{Token: "A.1654653399040a61.FlowToken.Vault"},
+					TransactionHash: "abc123",
 				},
 			},
 		}
