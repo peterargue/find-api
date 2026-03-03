@@ -179,15 +179,19 @@ func TestFlowService_GetEvmTransaction(t *testing.T) {
 			t.Errorf("Expected path %s, got %s", expectedPath, r.URL.Path)
 		}
 
-		resp := EvmTransaction{
-			Hash:         hash,
-			BlockNumber:  96708412,
-			From:         "0x1234",
-			To:           "0x5678",
-			Value:        "1000000000000000000",
-			GasLimit:     "21000",
-			GasUsed:      "21000",
-			Status:       "success",
+		resp := EvmTransactionResponse{
+			Data: []EvmTransaction{
+				{
+					Hash:        hash,
+					BlockNumber: 96708412,
+					From:        "0x1234",
+					To:          "0x5678",
+					Value:       "1000000000000000000",
+					GasLimit:    "21000",
+					GasUsed:     "21000",
+					Status:      "success",
+				},
+			},
 		}
 
 		w.Header().Set("Content-Type", "application/json")

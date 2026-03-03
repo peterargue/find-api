@@ -39,7 +39,7 @@ func (r *nftTransfersResult) String() string {
 	w := tabwriter.NewWriter(&buf, 0, 0, 2, ' ', 0)
 	fmt.Fprintln(w, "DIRECTION\tNFT_ID\tNFT_TYPE\tSENDER\tRECEIVER\tHEIGHT")
 	for _, t := range r.transfers {
-		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%d\n",
+		fmt.Fprintf(w, "%s\t%d\t%s\t%s\t%s\t%d\n",
 			t.Direction, t.NFTId, t.NFTType, t.Sender, t.Receiver, t.BlockHeight)
 	}
 	w.Flush()

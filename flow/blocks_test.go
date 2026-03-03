@@ -127,8 +127,8 @@ func TestFlowService_GetBlockServiceEvents(t *testing.T) {
 			Data: []BlockServiceEvent{
 				{
 					BlockHeight: height,
-					EventIndex:  0,
-					EventType:   "flow.EpochSetup",
+					
+					Name:        "flow.EpochSetup",
 					Timestamp:   "2024-01-15T10:00:00Z",
 				},
 			},
@@ -156,8 +156,8 @@ func TestFlowService_GetBlockServiceEvents(t *testing.T) {
 	if event.BlockHeight != height {
 		t.Errorf("Expected block height %d, got %d", height, event.BlockHeight)
 	}
-	if event.EventType != "flow.EpochSetup" {
-		t.Errorf("Expected event type flow.EpochSetup, got %s", event.EventType)
+	if event.Name != "flow.EpochSetup" {
+		t.Errorf("Expected event type flow.EpochSetup, got %s", event.Name)
 	}
 }
 

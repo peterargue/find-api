@@ -121,11 +121,11 @@ type AccountTransaction struct {
 	GasUsed         int                    `json:"gas_used"`
 	Payer           string                 `json:"payer"`
 	Proposer        string                 `json:"proposer"`
-	Roles           map[string]interface{} `json:"roles"`
-	Status          string                 `json:"status"`
-	Timestamp       string                 `json:"timestamp"`
-	TransactionHash string                 `json:"transaction_hash"`
-	TransactionID   string                 `json:"transaction_id"`
+	Roles           []string `json:"roles"`
+	Status          string   `json:"status"`
+	Timestamp       string   `json:"timestamp"`
+	TransactionHash string   `json:"transaction_body_hash"`
+	TransactionID   string   `json:"id"`
 }
 
 // AccountTransactionsResponse represents the response from the account transactions endpoint

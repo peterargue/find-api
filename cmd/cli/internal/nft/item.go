@@ -26,7 +26,7 @@ type nftItemResult struct {
 func (r *nftItemResult) String() string {
 	var buf bytes.Buffer
 	fmt.Fprintf(&buf, "ID:        %s\n", r.nft.ID)
-	fmt.Fprintf(&buf, "NFT ID:    %s\n", r.nft.NFTId)
+	fmt.Fprintf(&buf, "NFT ID:    %d\n", r.nft.NFTId)
 	fmt.Fprintf(&buf, "Type:      %s\n", r.nft.NFTType)
 	fmt.Fprintf(&buf, "Name:      %s\n", r.nft.Name)
 	fmt.Fprintf(&buf, "Owner:     %s\n", r.nft.Owner)

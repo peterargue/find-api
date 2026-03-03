@@ -35,9 +35,9 @@ type nftHoldingsResult struct {
 func (r *nftHoldingsResult) String() string {
 	var buf bytes.Buffer
 	w := tabwriter.NewWriter(&buf, 0, 0, 2, ' ', 0)
-	fmt.Fprintln(w, "ADDRESS\tBALANCE\tNFT_TYPE")
+	fmt.Fprintln(w, "OWNER\tCOUNT\tNFT_TYPE")
 	for _, h := range r.holdings {
-		fmt.Fprintf(w, "%s\t%d\t%s\n", h.Address, h.Balance, h.NFTType)
+		fmt.Fprintf(w, "%s\t%d\t%s\n", h.Owner, h.Count, h.NFTType)
 	}
 	w.Flush()
 	return buf.String()

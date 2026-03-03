@@ -72,10 +72,10 @@ func BlocksSuite(svc *flow.Service) Suite {
 						return "0 results (not an epoch boundary)", nil
 					}
 					e := res.Data[0]
-					if e.EventType == "" {
-						return "", fmt.Errorf("EventType is empty")
+					if e.Name == "" {
+						return "", fmt.Errorf("Name is empty")
 					}
-					return fmt.Sprintf("%d results, type=%s", len(res.Data), e.EventType), nil
+					return fmt.Sprintf("%d results, name=%s", len(res.Data), e.Name), nil
 				},
 			},
 			{

@@ -37,9 +37,9 @@ type serviceEventsResult struct {
 func (r *serviceEventsResult) String() string {
 	var buf bytes.Buffer
 	w := tabwriter.NewWriter(&buf, 0, 0, 2, ' ', 0)
-	fmt.Fprintln(w, "HEIGHT\tINDEX\tTYPE\tTIMESTAMP")
+	fmt.Fprintln(w, "HEIGHT\tNAME\tTIMESTAMP")
 	for _, e := range r.events {
-		fmt.Fprintf(w, "%d\t%d\t%s\t%s\n", e.BlockHeight, e.EventIndex, e.EventType, e.Timestamp)
+		fmt.Fprintf(w, "%d\t%s\t%s\n", e.BlockHeight, e.Name, e.Timestamp)
 	}
 	w.Flush()
 	return buf.String()

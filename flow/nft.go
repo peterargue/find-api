@@ -19,8 +19,8 @@ type NFTCollection struct {
 	FlowtyID     string `json:"flowty_id"`
 	Logo         string `json:"logo"`
 	Name         string `json:"name"`
-	NFTType      string `json:"nft_type"`
-	Path         string `json:"path"`
+	NFTType      string            `json:"id"`
+	Path         map[string]string `json:"path"`
 	Twitter      string `json:"twitter"`
 	Website      string `json:"website"`
 }
@@ -53,7 +53,7 @@ type NFTTransfer struct {
 	Address         string `json:"address"`
 	BlockHeight     uint64 `json:"block_height"`
 	Direction       string `json:"direction"`
-	NFTId           string `json:"nft_id"`
+	NFTId           int64  `json:"nft_id"`
 	NFTType         string `json:"nft_type"`
 	Receiver        string `json:"receiver"`
 	Sender          string `json:"sender"`
@@ -72,9 +72,10 @@ type NFTTransfersResponse struct {
 
 // NFTHolding represents an NFT holding
 type NFTHolding struct {
-	Address string `json:"address"`
-	Balance int    `json:"balance"`
-	NFTType string `json:"nft_type"`
+	Owner   string  `json:"owner"`
+	Count   int     `json:"count"`
+	Percentage float64 `json:"percentage"`
+	NFTType string  `json:"nft_type"`
 }
 
 // NFTHoldingResponse represents the response from the NFT holdings endpoint
@@ -92,7 +93,7 @@ type NFT struct {
 	ID          string                 `json:"id"`
 	Metadata    map[string]interface{} `json:"metadata"`
 	Name        string                 `json:"name"`
-	NFTId       string                 `json:"nft_id"`
+	NFTId       int64                  `json:"nft_id"`
 	NFTType     string                 `json:"nft_type"`
 	Owner       string                 `json:"owner"`
 	Thumbnail   string                 `json:"thumbnail"`
@@ -131,7 +132,7 @@ type AccountNFT struct {
 	ID          string                 `json:"id"`
 	Metadata    map[string]interface{} `json:"metadata"`
 	Name        string                 `json:"name"`
-	NFTId       string                 `json:"nft_id"`
+	NFTId       int64                  `json:"nft_id"`
 	NFTType     string                 `json:"nft_type"`
 	Owner       string                 `json:"owner"`
 	Thumbnail   string                 `json:"thumbnail"`

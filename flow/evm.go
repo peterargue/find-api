@@ -272,10 +272,13 @@ func (b *EvmTransactionRequestBuilder) Do(ctx context.Context) (*EvmTransaction,
 		return nil, err
 	}
 
-	var tx EvmTransaction
-	if err := b.service.client.DecodeResponse(resp, &tx); err != nil {
+	var wrapped EvmTransactionResponse
+	if err := b.service.client.DecodeResponse(resp, &wrapped); err != nil {
 		return nil, err
 	}
+	if len(wrapped.Data) == 0 {
+		return nil, fmt.Errorf("EVM transaction not found")
+	}
 
-	return &tx, nil
+	return &wrapped.Data[0], nil
 }

@@ -37,10 +37,10 @@ type BlockResponse struct {
 
 // BlockServiceEvent represents a block service event
 type BlockServiceEvent struct {
-	BlockHeight uint64 `json:"block_height"`
-	EventIndex  int    `json:"event_index"`
-	EventType   string `json:"event_type"`
-	Timestamp   string `json:"timestamp"`
+	BlockHeight uint64                 `json:"block_height"`
+	Fields      map[string]interface{} `json:"fields"`
+	Name        string                 `json:"name"`
+	Timestamp   string                 `json:"timestamp"`
 }
 
 // BlockServiceEventResponse represents the response from the block service events endpoint
@@ -68,11 +68,11 @@ type BlockTransaction struct {
 	GasUsed         int                    `json:"gas_used"`
 	Payer           string                 `json:"payer"`
 	Proposer        string                 `json:"proposer"`
-	Roles           map[string]interface{} `json:"roles"`
-	Status          string                 `json:"status"`
-	Timestamp       string                 `json:"timestamp"`
-	TransactionHash string                 `json:"transaction_hash"`
-	TransactionID   string                 `json:"transaction_id"`
+	Roles           []string `json:"roles"`
+	Status          string   `json:"status"`
+	Timestamp       string   `json:"timestamp"`
+	TransactionHash string   `json:"transaction_body_hash"`
+	TransactionID   string   `json:"id"`
 }
 
 // BlockTransactionsResponse represents the response from the block transactions endpoint

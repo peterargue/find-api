@@ -38,7 +38,7 @@ func (r *nftItemsResult) String() string {
 	w := tabwriter.NewWriter(&buf, 0, 0, 2, ' ', 0)
 	fmt.Fprintln(w, "ID\tNFT_ID\tNAME\tVALID")
 	for _, n := range r.nfts {
-		fmt.Fprintf(w, "%s\t%s\t%s\t%v\n", n.ID, n.NFTId, n.Name, n.Valid)
+		fmt.Fprintf(w, "%s	%d	%s	%v\n", n.ID, n.NFTId, n.Name, n.Valid)
 	}
 	w.Flush()
 	return buf.String()

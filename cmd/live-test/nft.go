@@ -27,7 +27,7 @@ func NFTSuite(svc *flow.Service) Suite {
 					}
 					c := res.Data[0]
 					if c.NFTType == "" {
-						return "", fmt.Errorf("NFTType is empty")
+						return "", fmt.Errorf("ID is empty")
 					}
 					if c.Name == "" {
 						return "", fmt.Errorf("Name is empty")
@@ -51,7 +51,7 @@ func NFTSuite(svc *flow.Service) Suite {
 					}
 					c := res.Data[0]
 					if c.NFTType == "" {
-						return "", fmt.Errorf("NFTType is empty")
+						return "", fmt.Errorf("ID is empty")
 					}
 					return fmt.Sprintf("items=%d, holders=%d", c.ItemCount, c.HolderCount), nil
 				},
@@ -71,21 +71,21 @@ func NFTSuite(svc *flow.Service) Suite {
 					}
 					t := res.Data[0]
 					if t.NFTType == "" {
-						return "", fmt.Errorf("NFTType is empty")
+						return "", fmt.Errorf("ID is empty")
 					}
 					if t.BlockHeight == 0 {
 						return "", fmt.Errorf("BlockHeight is zero")
 					}
-					if t.TransactionID == "" {
-						return "", fmt.Errorf("TransactionID is empty")
+					if t.TransactionHash == "" {
+						return "", fmt.Errorf("TransactionHash is empty")
 					}
-					if t.NFTId == "" {
+					if t.NFTId == 0 {
 						return "", fmt.Errorf("NFTId is empty")
 					}
 					if t.Address == "" {
-						return "", fmt.Errorf("Address is empty")
+						return "", fmt.Errorf("Owner is empty")
 					}
-					firstNFTId = t.NFTId
+					firstNFTId = fmt.Sprintf("%d", t.NFTId)
 					firstNFTAddress = t.Address
 					return fmt.Sprintf("%d results", len(res.Data)), nil
 				},
@@ -104,13 +104,13 @@ func NFTSuite(svc *flow.Service) Suite {
 						return "", fmt.Errorf("empty response")
 					}
 					h := res.Data[0]
-					if h.Address == "" {
-						return "", fmt.Errorf("Address is empty")
+					if h.Owner == "" {
+						return "", fmt.Errorf("Owner is empty")
 					}
 					if h.NFTType == "" {
-						return "", fmt.Errorf("NFTType is empty")
+						return "", fmt.Errorf("ID is empty")
 					}
-					return fmt.Sprintf("%d results, top=%s", len(res.Data), h.Address), nil
+					return fmt.Sprintf("%d results, top=%s", len(res.Data), h.Owner), nil
 				},
 			},
 			{
@@ -130,13 +130,13 @@ func NFTSuite(svc *flow.Service) Suite {
 						return "", fmt.Errorf("empty response")
 					}
 					n := res.Data[0]
-					if n.NFTType == "" {
-						return "", fmt.Errorf("NFTType is empty")
+					if n.ID == "" {
+						return "", fmt.Errorf("ID is empty")
 					}
-					if n.NFTId == "" {
+					if n.NFTId == 0 {
 						return "", fmt.Errorf("NFTId is empty")
 					}
-					return fmt.Sprintf("id=%s", n.NFTId), nil
+					return fmt.Sprintf("id=%d", n.NFTId), nil
 				},
 			},
 			{
@@ -154,7 +154,7 @@ func NFTSuite(svc *flow.Service) Suite {
 					}
 					c := res.Data[0]
 					if c.NFTType == "" {
-						return "", fmt.Errorf("NFTType is empty")
+						return "", fmt.Errorf("ID is empty")
 					}
 					return fmt.Sprintf("%d collections, owner=%s", len(res.Data), firstNFTAddress), nil
 				},
@@ -176,8 +176,8 @@ func NFTSuite(svc *flow.Service) Suite {
 						return "", fmt.Errorf("empty response")
 					}
 					n := res.Data[0]
-					if n.NFTType == "" {
-						return "", fmt.Errorf("NFTType is empty")
+					if n.ID == "" {
+						return "", fmt.Errorf("ID is empty")
 					}
 					return fmt.Sprintf("%d results", len(res.Data)), nil
 				},
