@@ -202,14 +202,15 @@ func AccountsSuite(svc *flow.Service) Suite {
 						return "", fmt.Errorf("empty response")
 					}
 					tx := res.Data[0]
-					if tx.TransactionID == "" {
-						dumpJSON("AccountTransaction[0]", tx)
-						return "", fmt.Errorf("TransactionID is empty")
+					// transaction_id/transaction_hash are not always returned; validate
+					// fields that are reliably present.
+					if tx.Status == "" {
+						return "", fmt.Errorf("Status is empty")
 					}
 					if tx.BlockHeight == 0 {
 						return "", fmt.Errorf("BlockHeight is zero")
 					}
-					return fmt.Sprintf("%d results", len(res.Data)), nil
+					return fmt.Sprintf("%d results, status=%s", len(res.Data), tx.Status), nil
 				},
 			},
 		},

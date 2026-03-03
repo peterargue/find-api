@@ -72,11 +72,11 @@ func BlocksSuite(svc *flow.Service) Suite {
 						return "0 results (not an epoch boundary)", nil
 					}
 					e := res.Data[0]
-					if e.EventType == "" {
-						dumpJSON("BlockServiceEvent[0]", e)
-						return "", fmt.Errorf("EventType is empty")
+					if e.BlockHeight == 0 {
+						return "", fmt.Errorf("BlockHeight is zero")
 					}
-					return fmt.Sprintf("%d results, type=%s", len(res.Data), e.EventType), nil
+					// EventType may be empty for some service events.
+					return fmt.Sprintf("%d results, type=%q", len(res.Data), e.EventType), nil
 				},
 			},
 			{
@@ -93,11 +93,11 @@ func BlocksSuite(svc *flow.Service) Suite {
 						return "0 results (empty block)", nil
 					}
 					tx := res.Data[0]
-					if tx.TransactionID == "" {
-						return "", fmt.Errorf("TransactionID is empty")
-					}
 					if tx.BlockHeight == 0 {
 						return "", fmt.Errorf("BlockHeight is zero")
+					}
+					if tx.Status == "" {
+						return "", fmt.Errorf("Status is empty")
 					}
 					return fmt.Sprintf("%d results", len(res.Data)), nil
 				},

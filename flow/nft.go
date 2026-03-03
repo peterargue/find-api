@@ -53,7 +53,7 @@ type NFTTransfer struct {
 	Address         string `json:"address"`
 	BlockHeight     uint64 `json:"block_height"`
 	Direction       string `json:"direction"`
-	NFTId           string `json:"nft_id"`
+	NFTId           int64  `json:"nft_id"`
 	NFTType         string `json:"nft_type"`
 	Receiver        string `json:"receiver"`
 	Sender          string `json:"sender"`
@@ -92,7 +92,7 @@ type NFT struct {
 	ID          string                 `json:"id"`
 	Metadata    map[string]interface{} `json:"metadata"`
 	Name        string                 `json:"name"`
-	NFTId       string                 `json:"nft_id"`
+	NFTId       int64                  `json:"nft_id"`
 	NFTType     string                 `json:"nft_type"`
 	Owner       string                 `json:"owner"`
 	Thumbnail   string                 `json:"thumbnail"`
@@ -131,7 +131,7 @@ type AccountNFT struct {
 	ID          string                 `json:"id"`
 	Metadata    map[string]interface{} `json:"metadata"`
 	Name        string                 `json:"name"`
-	NFTId       string                 `json:"nft_id"`
+	NFTId       int64                  `json:"nft_id"`
 	NFTType     string                 `json:"nft_type"`
 	Owner       string                 `json:"owner"`
 	Thumbnail   string                 `json:"thumbnail"`
