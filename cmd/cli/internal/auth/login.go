@@ -21,6 +21,9 @@ var loginCobra = &cobra.Command{
 token, and stores it at ~/.config/find-cli/token.json.`,
 }
 
+// maxTokenDuration is the maximum session length the FindLabs API supports.
+const maxTokenDuration = 7 * 24 * time.Hour
+
 func runLogin(args []string, flags *command.GlobalFlags) (command.Result, error) {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -35,12 +38,12 @@ func runLogin(args []string, flags *command.GlobalFlags) (command.Result, error)
 	passwordBytes, err := term.ReadPassword(int(os.Stdin.Fd()))
 	fmt.Println()
 	if err != nil {
-		return nil, fmt.Errorf("reading password: %w", err)
+		return nil, fmt.Errorf("could not read password securely (is stdin a terminal?): %w", err)
 	}
 	password := strings.TrimSpace(string(passwordBytes))
 
 	client := findapi.NewClient(username, password)
-	resp, err := client.Auth.GenerateToken(context.Background(), 168*time.Hour)
+	resp, err := client.Auth.GenerateToken(context.Background(), maxTokenDuration)
 	if err != nil {
 		return nil, fmt.Errorf("login failed: %w", err)
 	}

@@ -45,8 +45,8 @@ func LoadToken(path string) (token string, exp int64, err error) {
 	if err := json.Unmarshal(b, &tf); err != nil {
 		return "", 0, fmt.Errorf("invalid token file: %w", err)
 	}
-	if time.Now().After(time.Unix(tf.Exp, 0)) {
-		return "", 0, errors.New("stored token is expired")
+	if time.Now().Add(time.Minute).After(time.Unix(tf.Exp, 0)) {
+		return "", 0, errors.New("stored token is expired or expiring soon")
 	}
 	return tf.AccessToken, tf.Exp, nil
 }

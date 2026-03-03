@@ -41,7 +41,7 @@ func TestLoadTokenMissing(t *testing.T) {
 func TestLoadTokenExpired(t *testing.T) {
 	dir := t.TempDir()
 	path := filepath.Join(dir, "token.json")
-	exp := time.Now().Add(-time.Hour).Unix() // already expired
+	exp := time.Now().Add(30 * time.Second).Unix() // expires before the 1-minute buffer
 	if err := command.SaveToken(path, "old", exp); err != nil {
 		t.Fatal(err)
 	}
