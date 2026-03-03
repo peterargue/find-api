@@ -68,7 +68,7 @@ type TransactionDetails struct {
 	Imports          []ImportOutput     `json:"imports"`
 	Payer            string             `json:"payer"`
 	Proposer         string             `json:"proposer"`
-	Script           string             `json:"script"`
+	Script           string             `json:"transaction_body"`
 	Status           string             `json:"status"`
 	SurgeFactor      float64            `json:"surge_factor"`
 	Tags             []Tag              `json:"tags"`
@@ -83,11 +83,11 @@ type ArgumentItem struct {
 
 // EventOutput represents an event in transaction details
 type EventOutput struct {
-	Data             map[string]interface{} `json:"data"`
+	Fields           map[string]interface{} `json:"fields"`
 	EventIndex       int                    `json:"event_index"`
 	TransactionID    string                 `json:"transaction_id"`
 	TransactionIndex int                    `json:"transaction_index"`
-	Type             string                 `json:"type"`
+	Name             string                 `json:"name"`
 }
 
 // EvmTransactions represents EVM transaction information
