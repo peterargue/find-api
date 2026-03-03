@@ -10,20 +10,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type getFlags struct {
-	IncludeEvents bool `flag:"include-events" info:"Include full event data in response (default true)"`
-}
-
-var getFlagsVal = &getFlags{IncludeEvents: true}
-
 var getCmd = &command.Command{
 	Cmd: &cobra.Command{
 		Use:   "get <id>",
 		Short: "Get transaction details including script and events",
 		Args:  cobra.ExactArgs(1),
 	},
-	Flags: getFlagsVal,
-	Run:   runGet,
+	Run: runGet,
 }
 
 type txGetResult struct {
@@ -57,7 +50,7 @@ func runGet(args []string, flags *command.GlobalFlags) (command.Result, error) {
 	client := command.MustLoadClient()
 	resp, err := client.Flow.GetTransaction().
 		ID(args[0]).
-		IncludeEvents(getFlagsVal.IncludeEvents).
+		IncludeEvents(true).
 		Do(context.Background())
 	if err != nil {
 		return nil, err
