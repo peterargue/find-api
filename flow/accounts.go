@@ -47,7 +47,7 @@ type VaultInfo struct {
 
 // KeyInfo represents account key information
 type KeyInfo struct {
-	Index          int    `json:"index"`
+	Index          string `json:"index"`
 	PublicKey      string `json:"publicKey"`
 	SignAlgo       string `json:"signAlgo"`
 	HashAlgo       string `json:"hashAlgo"`
@@ -122,7 +122,7 @@ type AccountTransaction struct {
 	GasUsed         int                    `json:"gas_used"`
 	Payer           string                 `json:"payer"`
 	Proposer        string                 `json:"proposer"`
-	Roles           map[string]interface{} `json:"roles"`
+	Roles           []interface{}          `json:"roles"`
 	Status          string                 `json:"status"`
 	Timestamp       string                 `json:"timestamp"`
 	TransactionHash string                 `json:"transaction_hash"`

@@ -20,7 +20,7 @@ type NFTCollection struct {
 	Logo         string `json:"logo"`
 	Name         string `json:"name"`
 	NFTType      string `json:"nft_type"`
-	Path         string `json:"path"`
+	Path         interface{} `json:"path"`
 	Twitter      string `json:"twitter"`
 	Website      string `json:"website"`
 }

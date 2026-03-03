@@ -176,7 +176,7 @@ func TestFlowService_GetFTTransfers(t *testing.T) {
 					Direction:     "withdraw",
 					Sender:        "0x1234",
 					Receiver:      "0x5678",
-					Token:         "A.1654653399040a61.FlowToken.Vault",
+					Token:         FTTransferTokenDetails{Token: "A.1654653399040a61.FlowToken.Vault"},
 					TransactionID: "abc123",
 				},
 			},

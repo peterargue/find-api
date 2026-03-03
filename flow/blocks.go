@@ -39,7 +39,7 @@ type BlockResponse struct {
 type BlockServiceEvent struct {
 	BlockHeight uint64 `json:"block_height"`
 	EventIndex  int    `json:"event_index"`
-	EventType   string `json:"event_type"`
+	EventType   string `json:"type"`
 	Timestamp   string `json:"timestamp"`
 }
 
@@ -68,7 +68,7 @@ type BlockTransaction struct {
 	GasUsed         int                    `json:"gas_used"`
 	Payer           string                 `json:"payer"`
 	Proposer        string                 `json:"proposer"`
-	Roles           map[string]interface{} `json:"roles"`
+	Roles           []interface{}          `json:"roles"`
 	Status          string                 `json:"status"`
 	Timestamp       string                 `json:"timestamp"`
 	TransactionHash string                 `json:"transaction_hash"`

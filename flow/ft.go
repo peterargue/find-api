@@ -25,7 +25,7 @@ type FungibleToken struct {
 	IconURL           string  `json:"icon_url"`
 	ID                string  `json:"id"`
 	Name              string  `json:"name"`
-	Path              string  `json:"path"`
+	Path              interface{} `json:"path"`
 	Symbol            string  `json:"symbol"`
 	Tags              string  `json:"tags"`
 	Token             string  `json:"token"`
@@ -61,6 +61,14 @@ type FungibleTokenResponse struct {
 	Error interface{}            `json:"error,omitempty"`
 }
 
+// FTTransferTokenDetails represents the token details nested within an FT transfer
+type FTTransferTokenDetails struct {
+	Name   string `json:"name"`
+	Token  string `json:"token"`
+	Symbol string `json:"symbol"`
+	Logo   string `json:"logo"`
+}
+
 // FTTransfer represents a fungible token transfer
 type FTTransfer struct {
 	Address         string                 `json:"address"`
@@ -76,14 +84,8 @@ type FTTransfer struct {
 	Timestamp       string                 `json:"timestamp"`
 	Token           FTTransferTokenDetails `json:"token"`
 	TransactionHash string                 `json:"transaction_hash"`
+	TransactionID   string                 `json:"transaction_id"`
 	Verified        bool                   `json:"verified"`
-}
-
-type FTTransferTokenDetails struct {
-	Name   string `json:"name"`
-	Token  string `json:"token"`
-	Symbol string `json:"symbol"`
-	Logo   string `json:"logo"`
 }
 
 // TransfersResponse represents the response from the transfers endpoint
