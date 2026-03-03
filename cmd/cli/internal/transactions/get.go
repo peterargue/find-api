@@ -36,7 +36,7 @@ func (r *txGetResult) String() string {
 	fmt.Fprintf(&buf, "Timestamp:        %s\n", r.tx.Timestamp)
 	fmt.Fprintf(&buf, "Execution Effort: %g\n", r.tx.ExecutionEffort)
 	fmt.Fprintf(&buf, "Surge Factor:     %g\n", r.tx.SurgeFactor)
-	fmt.Fprintf(&buf, "Script:           %s\n", r.tx.Script)
+	fmt.Fprintf(&buf, "Script:\n%s\n", r.tx.Script)
 	return buf.String()
 }
 
