@@ -57,10 +57,11 @@ func (r *Runner) ExitCode() int {
 	return 0
 }
 
-// require returns an error if v is empty, used for skipping dependent tests.
+// require returns an error if v is empty; dependent tests use this to fail
+// clearly when a prerequisite test did not produce a usable value.
 func require(name, v string) error {
 	if v == "" {
-		return fmt.Errorf("skipped: no %s from previous test", name)
+		return fmt.Errorf("prerequisite missing: no %s from previous test", name)
 	}
 	return nil
 }
@@ -68,7 +69,7 @@ func require(name, v string) error {
 // requireUint64 returns an error if v is zero.
 func requireUint64(name string, v uint64) error {
 	if v == 0 {
-		return fmt.Errorf("skipped: no %s from previous test", name)
+		return fmt.Errorf("prerequisite missing: no %s from previous test", name)
 	}
 	return nil
 }
