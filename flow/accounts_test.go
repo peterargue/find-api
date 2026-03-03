@@ -74,8 +74,8 @@ func TestFlowService_GetAccount(t *testing.T) {
 					FlowBalance: 100.5,
 					Keys: []KeyInfo{
 						{
-							Index:     0,
-							PublicKey: "abc123",
+							Index: "0",
+							Key:   "abc123",
 						},
 					},
 				},

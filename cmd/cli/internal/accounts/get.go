@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/peterargue/find-api/cmd/cli/internal/command"
 	"github.com/peterargue/find-api/flow"
@@ -26,9 +27,9 @@ func (r *accountResult) String() string {
 	var buf bytes.Buffer
 	a := r.account
 	fmt.Fprintf(&buf, "Address:           %s\n", a.Address)
-	fmt.Fprintf(&buf, "Flow Balance:      %g\n", a.FlowBalance)
-	fmt.Fprintf(&buf, "Storage Used:      %g\n", a.StorageUsed)
-	fmt.Fprintf(&buf, "Storage Available: %g\n", a.StorageAvailable)
+	fmt.Fprintf(&buf, "Flow Balance:      %s\n", strconv.FormatFloat(a.FlowBalance, 'f', -1, 64))
+	fmt.Fprintf(&buf, "Storage Used:      %s\n", strconv.FormatFloat(a.StorageUsed, 'f', -1, 64))
+	fmt.Fprintf(&buf, "Storage Available: %s\n", strconv.FormatFloat(a.StorageAvailable, 'f', -1, 64))
 	if a.Find != nil {
 		fmt.Fprintf(&buf, "Find Name:         %s\n", a.Find.Name)
 	}

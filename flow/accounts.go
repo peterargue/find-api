@@ -47,13 +47,12 @@ type VaultInfo struct {
 
 // KeyInfo represents account key information
 type KeyInfo struct {
-	Index          int    `json:"index"`
-	PublicKey      string `json:"publicKey"`
-	SignAlgo       string `json:"signAlgo"`
-	HashAlgo       string `json:"hashAlgo"`
-	Weight         int    `json:"weight"`
-	SequenceNumber int    `json:"sequenceNumber"`
-	Revoked        bool   `json:"revoked"`
+	Index    string `json:"index"`
+	Key      string `json:"key"`
+	SignAlgo string `json:"signatureAlgorithm"`
+	HashAlgo string `json:"hashAlgorithm"`
+	Weight   int    `json:"weight"`
+	Revoked  bool   `json:"revoked"`
 }
 
 // Domains represents domain information
