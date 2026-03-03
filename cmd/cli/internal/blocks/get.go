@@ -45,12 +45,15 @@ func (r *blockResult) Oneliner() string {
 func (r *blockResult) JSON() any { return r.block }
 
 func runGet(args []string, flags *command.GlobalFlags) (command.Result, error) {
+	client := command.MustLoadClient()
+	ctx := context.Background()
+
 	height, err := strconv.ParseUint(args[0], 10, 64)
 	if err != nil {
-		return nil, fmt.Errorf("invalid height %q: %w", args[0], err)
+		return nil, fmt.Errorf("%q looks like a block ID; block lookup by ID is not supported — please provide a block height instead", args[0])
 	}
-	client := command.MustLoadClient()
-	resp, err := client.Flow.GetBlock().Height(height).Do(context.Background())
+
+	resp, err := client.Flow.GetBlock().Height(height).Do(ctx)
 	if err != nil {
 		return nil, err
 	}
