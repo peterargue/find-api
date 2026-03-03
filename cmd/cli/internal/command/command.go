@@ -87,13 +87,13 @@ func bindFlags(c *Command) {
 		fv := v.Field(i)
 		switch fv.Interface().(type) {
 		case string:
-			c.Cmd.Flags().StringVar(fv.Addr().Interface().(*string), flagName, "", usage)
+			c.Cmd.Flags().StringVar(fv.Addr().Interface().(*string), flagName, fv.String(), usage)
 		case bool:
-			c.Cmd.Flags().BoolVar(fv.Addr().Interface().(*bool), flagName, false, usage)
+			c.Cmd.Flags().BoolVar(fv.Addr().Interface().(*bool), flagName, fv.Bool(), usage)
 		case int:
-			c.Cmd.Flags().IntVar(fv.Addr().Interface().(*int), flagName, 0, usage)
+			c.Cmd.Flags().IntVar(fv.Addr().Interface().(*int), flagName, int(fv.Int()), usage)
 		case uint64:
-			c.Cmd.Flags().Uint64Var(fv.Addr().Interface().(*uint64), flagName, 0, usage)
+			c.Cmd.Flags().Uint64Var(fv.Addr().Interface().(*uint64), flagName, fv.Uint(), usage)
 		case []string:
 			c.Cmd.Flags().StringSliceVar(fv.Addr().Interface().(*[]string), flagName, nil, usage)
 		}

@@ -307,8 +307,9 @@ func (b *TransactionsRequestBuilder) Do(ctx context.Context) (*TransactionsRespo
 
 // TransactionRequestBuilder builds a request to get a specific transaction
 type TransactionRequestBuilder struct {
-	service *Service
-	id      string
+	service       *Service
+	id            string
+	includeEvents *bool
 }
 
 // GetTransaction creates a new transaction request builder
@@ -322,6 +323,12 @@ func (b *TransactionRequestBuilder) ID(id string) *TransactionRequestBuilder {
 	return b
 }
 
+// IncludeEvents sets whether to include full event data in the response (optional, default false)
+func (b *TransactionRequestBuilder) IncludeEvents(include bool) *TransactionRequestBuilder {
+	b.includeEvents = &include
+	return b
+}
+
 // Do executes the transaction request
 func (b *TransactionRequestBuilder) Do(ctx context.Context) (*TransactionResponse, error) {
 	if b.id == "" {
@@ -329,7 +336,14 @@ func (b *TransactionRequestBuilder) Do(ctx context.Context) (*TransactionRespons
 	}
 
 	path := fmt.Sprintf("/flow/v1/transaction/%s", b.id)
-	resp, err := b.service.client.DoRequest(ctx, http.MethodGet, path, nil)
+
+	var query url.Values
+	if b.includeEvents != nil {
+		query = url.Values{}
+		query.Set("include_events", strconv.FormatBool(*b.includeEvents))
+	}
+
+	resp, err := b.service.client.DoRequest(ctx, http.MethodGet, path, query)
 	if err != nil {
 		return nil, err
 	}
