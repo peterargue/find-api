@@ -11,6 +11,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func formatBytes(b float64) string {
+	const unit = 1024.0
+	if b < unit {
+		return fmt.Sprintf("%.0f B", b)
+	}
+	div, exp := unit, 0
+	for n := b / unit; n >= unit; n /= unit {
+		div *= unit
+		exp++
+	}
+	return fmt.Sprintf("%.1f %ciB", b/div, "KMGTPE"[exp])
+}
+
 var getCmd = &command.Command{
 	Cmd: &cobra.Command{
 		Use:     "get <address>",
@@ -28,8 +41,8 @@ func (r *accountResult) String() string {
 	a := r.account
 	fmt.Fprintf(&buf, "Address:           %s\n", a.Address)
 	fmt.Fprintf(&buf, "Flow Balance:      %s\n", strconv.FormatFloat(a.FlowBalance, 'f', -1, 64))
-	fmt.Fprintf(&buf, "Storage Used:      %s\n", strconv.FormatFloat(a.StorageUsed, 'f', -1, 64))
-	fmt.Fprintf(&buf, "Storage Available: %s\n", strconv.FormatFloat(a.StorageAvailable, 'f', -1, 64))
+	fmt.Fprintf(&buf, "Storage Used:      %s\n", formatBytes(a.StorageUsed))
+	fmt.Fprintf(&buf, "Storage Available: %s\n", formatBytes(a.StorageAvailable))
 	if a.Find != nil && a.Find.Name != "" {
 		fmt.Fprintf(&buf, "Find Name:         %s\n", a.Find.Name)
 	}
