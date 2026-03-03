@@ -2,3 +2,5 @@
 .prompts
 .local
 .env
+docs/plans/
+.worktrees/
