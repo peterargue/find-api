@@ -2,5 +2,8 @@
 .prompts
 .local
 .env
-docs/plans/
+.cursorignore
 .worktrees/
+docs/plans/
+cli
+live-test

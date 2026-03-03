@@ -11,17 +11,18 @@ import (
 
 func main() {
 	// Load .env if it exists; ignore error if file is absent.
-	_ = godotenv.Load()
-
-	apiURL := os.Getenv("FIND_API_URL")
-	user := os.Getenv("FIND_API_USER")
-	pass := os.Getenv("FIND_API_PASS")
-
-	if apiURL == "" || user == "" || pass == "" {
-		log.Fatal("FIND_API_URL, FIND_API_USER, and FIND_API_PASS must be set")
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("Failed to load .env file: %v", err)
 	}
 
-	client := findapi.NewClient(user, pass, findapi.WithBaseURL(apiURL))
+	user := os.Getenv("FINDAPI_USERNAME")
+	pass := os.Getenv("FINDAPI_PASSWORD")
+
+	if user == "" || pass == "" {
+		log.Fatal("FINDAPI_USERNAME, and FINDAPI_PASSWORD must be set")
+	}
+
+	client := findapi.NewClient(user, pass)
 	svc := client.Flow
 
 	suites := []Suite{
