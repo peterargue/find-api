@@ -31,7 +31,7 @@ func FormatResult(result Result, filter, format string) (string, error) {
 func filterField(result Result, field string) (string, error) {
 	m, ok := result.JSON().(map[string]any)
 	if !ok {
-		return "", fmt.Errorf("cannot filter: result is not a JSON object")
+		return "", fmt.Errorf("--filter requires a single-object result; use --format json for list output")
 	}
 	v := m[field]
 	if v == nil {

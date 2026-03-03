@@ -21,9 +21,10 @@ var serviceEventsFlagsVal = &serviceEventsFlags{}
 
 var serviceEventsCmd = &command.Command{
 	Cmd: &cobra.Command{
-		Use:   "service-events <height>",
-		Short: "List service events for a block",
-		Args:  cobra.ExactArgs(1),
+		Use:     "service-events <height>",
+		Short:   "List service events for a block",
+		Example: "find blocks service-events 12345678",
+		Args:    cobra.ExactArgs(1),
 	},
 	Flags: serviceEventsFlagsVal,
 	Run:   runServiceEvents,

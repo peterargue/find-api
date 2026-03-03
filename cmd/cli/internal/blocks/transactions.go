@@ -20,9 +20,10 @@ var blockTxFlagsVal = &blockTxFlags{}
 
 var transactionsCmd = &command.Command{
 	Cmd: &cobra.Command{
-		Use:   "transactions <height>",
-		Short: "List transactions in a block",
-		Args:  cobra.ExactArgs(1),
+		Use:     "transactions <height>",
+		Short:   "List transactions in a block",
+		Example: "find blocks transactions 12345678\nfind blocks transactions 12345678 --include-events",
+		Args:    cobra.ExactArgs(1),
 	},
 	Flags: blockTxFlagsVal,
 	Run:   runBlockTransactions,

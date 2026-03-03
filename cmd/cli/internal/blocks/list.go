@@ -46,7 +46,7 @@ func (r *blocksResult) String() string {
 
 func (r *blocksResult) Oneliner() string {
 	if len(r.blocks) == 0 {
-		return ""
+		return "no blocks found"
 	}
 	b := r.blocks[0]
 	return fmt.Sprintf("%d %s", b.Height, b.ID)

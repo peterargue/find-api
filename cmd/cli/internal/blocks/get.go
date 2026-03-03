@@ -42,18 +42,7 @@ func (r *blockResult) Oneliner() string {
 	return fmt.Sprintf("%d %s", r.block.Height, r.block.ID)
 }
 
-func (r *blockResult) JSON() any {
-	return map[string]any{
-		"height":         r.block.Height,
-		"id":             r.block.ID,
-		"timestamp":      r.block.Timestamp,
-		"tx":             r.block.Tx,
-		"fees":           r.block.Fees,
-		"total_gas_used": r.block.TotalGasUsed,
-		"evm_tx_count":   r.block.EvmTxCount,
-		"surge_factor":   r.block.SurgeFactor,
-	}
-}
+func (r *blockResult) JSON() any { return r.block }
 
 func runGet(args []string, flags *command.GlobalFlags) (command.Result, error) {
 	height, err := strconv.ParseUint(args[0], 10, 64)
