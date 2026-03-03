@@ -57,6 +57,9 @@ func TransactionSuite(svc *flow.Service) Suite {
 					if tx.BlockHeight == 0 {
 						return "", fmt.Errorf("BlockHeight is zero")
 					}
+					if tx.Status == "" {
+						return "", fmt.Errorf("Status is empty")
+					}
 					return fmt.Sprintf("id=%s, status=%s", tx.ID, tx.Status), nil
 				},
 			},

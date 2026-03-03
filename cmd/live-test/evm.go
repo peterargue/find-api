@@ -92,6 +92,9 @@ func EvmSuite(svc *flow.Service) Suite {
 					if tx.Hash == "" {
 						return "", fmt.Errorf("Hash is empty")
 					}
+					if tx.BlockNumber == 0 {
+						return "", fmt.Errorf("BlockNumber is zero")
+					}
 					if tx.Status == "" {
 						return "", fmt.Errorf("Status is empty")
 					}

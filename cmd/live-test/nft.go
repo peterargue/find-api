@@ -79,6 +79,12 @@ func NFTSuite(svc *flow.Service) Suite {
 					if t.TransactionID == "" {
 						return "", fmt.Errorf("TransactionID is empty")
 					}
+					if t.NFTId == "" {
+						return "", fmt.Errorf("NFTId is empty")
+					}
+					if t.Address == "" {
+						return "", fmt.Errorf("Address is empty")
+					}
 					firstNFTId = t.NFTId
 					firstNFTAddress = t.Address
 					return fmt.Sprintf("%d results", len(res.Data)), nil

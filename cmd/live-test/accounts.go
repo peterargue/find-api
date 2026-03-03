@@ -52,6 +52,9 @@ func AccountsSuite(svc *flow.Service) Suite {
 					if a.Address == "" {
 						return "", fmt.Errorf("Address is empty")
 					}
+					if a.FlowBalance == 0 {
+						return "", fmt.Errorf("FlowBalance is zero")
+					}
 					return fmt.Sprintf("address=%s, balance=%g", a.Address, a.FlowBalance), nil
 				},
 			},
@@ -141,6 +144,9 @@ func AccountsSuite(svc *flow.Service) Suite {
 					v := res.Data[0]
 					if v.Token == "" {
 						return "", fmt.Errorf("Token is empty")
+					}
+					if v.Balance == 0 {
+						return "", fmt.Errorf("Balance is zero")
 					}
 					return fmt.Sprintf("balance=%g", v.Balance), nil
 				},
