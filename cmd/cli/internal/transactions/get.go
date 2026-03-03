@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"strconv"
+	"strings"
 
 	"github.com/peterargue/find-api/cmd/cli/internal/command"
 	"github.com/peterargue/find-api/flow"
@@ -26,17 +26,29 @@ type txGetResult struct {
 
 func (r *txGetResult) String() string {
 	var buf bytes.Buffer
-	fmt.Fprintf(&buf, "ID:               %s\n", r.tx.ID)
-	fmt.Fprintf(&buf, "Status:           %s\n", r.tx.Status)
-	fmt.Fprintf(&buf, "Fee:              %g\n", r.tx.Fee)
-	fmt.Fprintf(&buf, "Gas Used:         %d\n", r.tx.GasUsed)
-	fmt.Fprintf(&buf, "Payer:            %s\n", r.tx.Payer)
-	fmt.Fprintf(&buf, "Proposer:         %s\n", r.tx.Proposer)
-	fmt.Fprintf(&buf, "Block Height:     %d\n", r.tx.BlockHeight)
-	fmt.Fprintf(&buf, "Block ID:         %s\n", r.tx.BlockID)
-	fmt.Fprintf(&buf, "Timestamp:        %s\n", r.tx.Timestamp)
-	fmt.Fprintf(&buf, "Execution Effort: %s\n", strconv.FormatFloat(r.tx.ExecutionEffort, 'f', -1, 64))
-	fmt.Fprintf(&buf, "Surge Factor:     %g\n", r.tx.SurgeFactor)
+	fmt.Fprintf(&buf, "ID:           %s\n", r.tx.ID)
+	fmt.Fprintf(&buf, "Block Height: %d\n", r.tx.BlockHeight)
+	fmt.Fprintf(&buf, "Block ID:     %s\n", r.tx.BlockID)
+	fmt.Fprintf(&buf, "Timestamp:    %s\n", r.tx.Timestamp)
+	fmt.Fprintf(&buf, "Status:       %s\n", r.tx.Status)
+	fmt.Fprintf(&buf, "Fee:          %g\n", r.tx.Fee)
+	fmt.Fprintf(&buf, "Gas Used:     %d\n", r.tx.GasUsed)
+	fmt.Fprintf(&buf, "Surge Factor: %g\n", r.tx.SurgeFactor)
+	fmt.Fprintf(&buf, "Payer:        %s\n", r.tx.Payer)
+	fmt.Fprintf(&buf, "Proposer:     %s\n", r.tx.Proposer)
+	fmt.Fprintf(&buf, "Authorizers:  %s\n", strings.Join(r.tx.Authorizers, ","))
+	if r.tx.ErrorCode != "" {
+		fmt.Fprintf(&buf, "Error Code:   %s\n", r.tx.ErrorCode)
+	}
+	if r.tx.Error != "" {
+		fmt.Fprintf(&buf, "Error:\n%s\n", r.tx.Error)
+	}
+	if len(r.tx.Argument) > 0 {
+		fmt.Fprintf(&buf, "Arguments:\n")
+		for i, arg := range r.tx.Argument {
+			fmt.Fprintf(&buf, "  - #%d [%s] %v\n", i, arg.Type, arg.Value)
+		}
+	}
 	fmt.Fprintf(&buf, "Script:\n%s\n", r.tx.Script)
 	return buf.String()
 }
