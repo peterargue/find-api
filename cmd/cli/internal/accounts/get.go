@@ -12,7 +12,7 @@ import (
 )
 
 func formatBytes(b float64) string {
-	const unit = 1024.0
+	const unit = 1000.0
 	if b < unit {
 		return fmt.Sprintf("%.0f B", b)
 	}
@@ -21,7 +21,7 @@ func formatBytes(b float64) string {
 		div *= unit
 		exp++
 	}
-	return fmt.Sprintf("%.1f %ciB", b/div, "KMGTPE"[exp])
+	return fmt.Sprintf("%.2f %cB", b/div, "KMGTPE"[exp])
 }
 
 var getCmd = &command.Command{
