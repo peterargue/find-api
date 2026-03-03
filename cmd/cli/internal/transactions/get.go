@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/peterargue/find-api/cmd/cli/internal/command"
 	"github.com/peterargue/find-api/flow"
@@ -34,7 +35,7 @@ func (r *txGetResult) String() string {
 	fmt.Fprintf(&buf, "Block Height:     %d\n", r.tx.BlockHeight)
 	fmt.Fprintf(&buf, "Block ID:         %s\n", r.tx.BlockID)
 	fmt.Fprintf(&buf, "Timestamp:        %s\n", r.tx.Timestamp)
-	fmt.Fprintf(&buf, "Execution Effort: %g\n", r.tx.ExecutionEffort)
+	fmt.Fprintf(&buf, "Execution Effort: %s\n", strconv.FormatFloat(r.tx.ExecutionEffort, 'f', -1, 64))
 	fmt.Fprintf(&buf, "Surge Factor:     %g\n", r.tx.SurgeFactor)
 	fmt.Fprintf(&buf, "Script:\n%s\n", r.tx.Script)
 	return buf.String()
