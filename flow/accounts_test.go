@@ -319,7 +319,7 @@ func TestFlowService_GetAccountFTTokenTransfers(t *testing.T) {
 					Amount:      100.5,
 					BlockHeight: 96708412,
 					Direction:   "deposit",
-					Token:       token,
+					Token:       FTTransferTokenDetails{Token: token},
 				},
 			},
 		}
