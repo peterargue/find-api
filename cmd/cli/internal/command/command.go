@@ -35,7 +35,7 @@ func (c *Command) AddToParent(parent *cobra.Command) {
 		result, err := c.Run(args, &Flags)
 		if err != nil {
 			handleError(err)
-			return err
+			return nil  // handleError already printed; don't let cobra print again
 		}
 		if result == nil {
 			return nil
@@ -45,7 +45,7 @@ func (c *Command) AddToParent(parent *cobra.Command) {
 			fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 			return err
 		}
-		printResult(formatted, Flags.Format, Flags.Filter)
+		printResult(formatted, Flags.Format, Flags.Filter, Flags.Save)
 		return nil
 	}
 	bindFlags(c)
@@ -68,7 +68,14 @@ func bindFlags(c *Command) {
 	if c.Flags == nil {
 		return
 	}
-	v := reflect.ValueOf(c.Flags).Elem()
+	rv := reflect.ValueOf(c.Flags)
+	if rv.Kind() != reflect.Ptr || rv.IsNil() {
+		return
+	}
+	v := rv.Elem()
+	if v.Kind() != reflect.Struct {
+		return
+	}
 	t := v.Type()
 	for i := range t.NumField() {
 		field := t.Field(i)

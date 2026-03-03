@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 )
 
@@ -34,25 +35,23 @@ func filterField(result Result, field string) (string, error) {
 	}
 	v := m[field]
 	if v == nil {
-		v = m[strings.ToLower(field)]
-	}
-	if v == nil {
 		keys := make([]string, 0, len(m))
 		for k := range m {
 			keys = append(keys, k)
 		}
+		sort.Strings(keys)
 		return "", fmt.Errorf("field %q not found; available: %s", field, strings.Join(keys, ", "))
 	}
 	return fmt.Sprintf("%v", v), nil
 }
 
 // printResult writes the formatted result to stdout (or a file if --save is set).
-func printResult(result string, format, filter string) {
-	if Flags.Save != "" {
-		if err := os.WriteFile(Flags.Save, []byte(result), 0o644); err != nil {
+func printResult(result string, format, filter, save string) {
+	if save != "" {
+		if err := os.WriteFile(save, []byte(result), 0o644); err != nil {
 			fmt.Fprintf(os.Stderr, "Error saving file: %s\n", err)
 		}
-		fmt.Printf("Result saved to: %s\n", Flags.Save)
+		fmt.Printf("Result saved to: %s\n", save)
 		return
 	}
 	if format == "inline" || filter != "" {
