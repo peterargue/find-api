@@ -85,11 +85,17 @@ func EvmSuite(svc *flow.Service) Suite {
 					if err := require("evm tx hash", firstEvmTxHash); err != nil {
 						return "", err
 					}
-					tx, err := svc.GetEvmTransaction().Hash(firstEvmTxHash).Do(ctx)
+					res, err := svc.GetEvmTransaction().Hash(firstEvmTxHash).Do(ctx)
 					if err != nil {
 						return "", err
 					}
+					if len(res.Data) == 0 {
+						dumpJSON("EvmTransactionResponse", res)
+						return "", fmt.Errorf("empty response")
+					}
+					tx := res.Data[0]
 					if tx.Hash == "" {
+						dumpJSON("EvmTransaction[0]", tx)
 						return "", fmt.Errorf("Hash is empty")
 					}
 					if tx.BlockNumber == 0 {

@@ -26,6 +26,7 @@ func FTSuite(svc *flow.Service) Suite {
 					}
 					ft := res.Data[0]
 					if ft.Token == "" {
+						dumpJSON("FungibleToken[0]", ft)
 						return "", fmt.Errorf("Token is empty")
 					}
 					if ft.Symbol == "" {

@@ -31,14 +31,17 @@ func ContractsSuite(svc *flow.Service) Suite {
 					if c.Address == "" {
 						return "", fmt.Errorf("Address is empty")
 					}
+					// Set chain variables before optional field checks so subsequent
+					// tests can run even if ContractName is missing.
+					firstIdentifier = c.Identifier
+					firstAddress = c.Address
 					if c.ContractName == "" {
+						dumpJSON("Contract[0]", c)
 						return "", fmt.Errorf("ContractName is empty")
 					}
 					if c.BlockHeight == 0 {
 						return "", fmt.Errorf("BlockHeight is zero")
 					}
-					firstIdentifier = c.Identifier
-					firstAddress = c.Address
 					return fmt.Sprintf("%d results, first=%s", len(res.Data), c.ContractName), nil
 				},
 			},

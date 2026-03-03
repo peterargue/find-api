@@ -27,6 +27,7 @@ func NFTSuite(svc *flow.Service) Suite {
 					}
 					c := res.Data[0]
 					if c.NFTType == "" {
+						dumpJSON("NFTCollection[0]", c)
 						return "", fmt.Errorf("NFTType is empty")
 					}
 					if c.Name == "" {

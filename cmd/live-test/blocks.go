@@ -73,6 +73,7 @@ func BlocksSuite(svc *flow.Service) Suite {
 					}
 					e := res.Data[0]
 					if e.EventType == "" {
+						dumpJSON("BlockServiceEvent[0]", e)
 						return "", fmt.Errorf("EventType is empty")
 					}
 					return fmt.Sprintf("%d results, type=%s", len(res.Data), e.EventType), nil

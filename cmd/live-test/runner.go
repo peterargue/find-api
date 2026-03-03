@@ -2,8 +2,23 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"os"
 )
+
+// debug is true when LIVE_TEST_DEBUG=1 is set. Suites use dumpJSON to print
+// the raw response when a field they need turns out to be empty.
+var debug = os.Getenv("LIVE_TEST_DEBUG") == "1"
+
+// dumpJSON prints v as indented JSON to stdout when debug mode is on.
+func dumpJSON(label string, v any) {
+	if !debug {
+		return
+	}
+	b, _ := json.MarshalIndent(v, "    ", "  ")
+	fmt.Printf("  [DEBUG] %s: %s\n", label, string(b))
+}
 
 // Test is a single named check with a run function.
 // Run returns a short summary string on success, or an error on failure.

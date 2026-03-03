@@ -126,15 +126,15 @@ func TestFlowService_GetEvmTransactions(t *testing.T) {
 		resp := EvmTransactionResponse{
 			Data: []EvmTransaction{
 				{
-					Hash:            "0xabc123",
-					BlockNumber:     96708412,
-					From:            "0x1234",
-					To:              "0x5678",
-					Value:           "1000000000000000000",
-					GasLimit:        "21000",
-					GasUsed:         "21000",
-					GasPrice:        "1000000000",
-					Status:          "success",
+					Hash:             "0xabc123",
+					BlockNumber:      96708412,
+					From:             "0x1234",
+					To:               "0x5678",
+					Value:            "1000000000000000000",
+					GasLimit:         "21000",
+					GasUsed:          "21000",
+					GasPrice:         "1000000000",
+					Status:           "success",
 					TransactionIndex: 0,
 				},
 			},
@@ -179,15 +179,19 @@ func TestFlowService_GetEvmTransaction(t *testing.T) {
 			t.Errorf("Expected path %s, got %s", expectedPath, r.URL.Path)
 		}
 
-		resp := EvmTransaction{
-			Hash:         hash,
-			BlockNumber:  96708412,
-			From:         "0x1234",
-			To:           "0x5678",
-			Value:        "1000000000000000000",
-			GasLimit:     "21000",
-			GasUsed:      "21000",
-			Status:       "success",
+		resp := EvmTransactionResponse{
+			Data: []EvmTransaction{
+				{
+					Hash:        hash,
+					BlockNumber: 96708412,
+					From:        "0x1234",
+					To:          "0x5678",
+					Value:       "1000000000000000000",
+					GasLimit:    "21000",
+					GasUsed:     "21000",
+					Status:      "success",
+				},
+			},
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -204,11 +208,16 @@ func TestFlowService_GetEvmTransaction(t *testing.T) {
 		t.Fatalf("GetEvmTransaction failed: %v", err)
 	}
 
-	if result.Hash != hash {
-		t.Errorf("Expected hash %s, got %s", hash, result.Hash)
+	if len(result.Data) != 1 {
+		t.Errorf("Expected 1 transaction, got %d", len(result.Data))
 	}
-	if result.BlockNumber != 96708412 {
-		t.Errorf("Expected block number 96708412, got %d", result.BlockNumber)
+
+	tx := result.Data[0]
+	if tx.Hash != hash {
+		t.Errorf("Expected hash %s, got %s", hash, tx.Hash)
+	}
+	if tx.BlockNumber != 96708412 {
+		t.Errorf("Expected block number 96708412, got %d", tx.BlockNumber)
 	}
 }
 

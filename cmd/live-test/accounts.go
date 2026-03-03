@@ -203,6 +203,7 @@ func AccountsSuite(svc *flow.Service) Suite {
 					}
 					tx := res.Data[0]
 					if tx.TransactionID == "" {
+						dumpJSON("AccountTransaction[0]", tx)
 						return "", fmt.Errorf("TransactionID is empty")
 					}
 					if tx.BlockHeight == 0 {
