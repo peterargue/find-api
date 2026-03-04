@@ -279,7 +279,7 @@ The `findapi` CLI provides command-line access to the FindLabs API.
 ### Installation
 
 ```bash
-go install ./cmd/findapi
+go install github.com/peterargue/find-api/cmd/findapi@latest
 ```
 
 ### Authentication
