@@ -272,6 +272,117 @@ if err != nil {
 fmt.Printf("Token expires at: %d\n", token.Exp)
 ```
 
+## CLI
+
+The `findapi` CLI provides command-line access to the FindLabs API.
+
+### Installation
+
+```bash
+go install ./cmd/findapi
+```
+
+### Authentication
+
+Before using any commands, log in to store a 7-day authentication token:
+
+```bash
+find auth login
+find auth login --username alice --password s3cr3t
+```
+
+Credentials are prompted interactively if flags are omitted. The token is saved to `~/.config/find-cli/token.json`.
+
+### Global Flags
+
+All commands support these flags:
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--format` | `text` | Output format: `text`, `json`, `inline` |
+| `--filter` | | Filter output by field name |
+| `--save` | | Save output to file |
+| `--log` | `info` | Log level: `debug`, `info`, `error`, `none` |
+
+### Commands
+
+#### `blocks`
+
+| Command | Description |
+|---------|-------------|
+| `find blocks list` | List recent blocks (`--height`, `--limit`, `--offset`) |
+| `find blocks get <height>` | Get a block by height |
+| `find blocks transactions <height>` | List transactions in a block (`--include-events`) |
+| `find blocks service-events <height>` | List service events for a block (`--limit`, `--offset`) |
+
+#### `accounts`
+
+| Command | Description |
+|---------|-------------|
+| `find accounts list` | List accounts (`--height`, `--limit`, `--offset`, `--sort-by`) |
+| `find accounts get <address>` | Get account details |
+| `find accounts ft <address>` | List FT collections for an account |
+| `find accounts ft-holdings <address>` | List FT holdings with statistics |
+| `find accounts ft-transfers <address>` | List FT transfers for an account |
+| `find accounts ft-token <address> <token>` | Get vault info for a specific FT token |
+| `find accounts ft-token-transfers <address> <token>` | List transfers for a specific FT token |
+| `find accounts nft <address>` | List NFT collections for an account |
+| `find accounts nft-items <address> <nft-type>` | List NFTs of a specific type (`--valid-only`, `--sort-by`) |
+| `find accounts transactions <address>` | List transactions for an account (`--from`, `--to`, `--include-events`) |
+| `find accounts tax-report <address>` | Get tax report for an account |
+
+#### `transactions`
+
+| Command | Description |
+|---------|-------------|
+| `find transactions list` | List transactions (`--height`, `--status`, `--payer`, `--proposer`, `--from`, `--to`, `--include-events`) |
+| `find transactions get <id>` | Get transaction details including script and events |
+| `find transactions scheduled` | List scheduled transactions (`--owner`, `--status`, `--completed`) |
+
+#### `nft`
+
+| Command | Description |
+|---------|-------------|
+| `find nft list` | List NFT collections |
+| `find nft get <type>` | Get NFT collection details |
+| `find nft transfers` | List NFT transfers (`--address`, `--nft-type`, `--height`) |
+| `find nft holdings <type>` | List NFT holdings for a collection |
+| `find nft item <type> <id>` | Get details for a specific NFT item |
+
+#### `ft`
+
+| Command | Description |
+|---------|-------------|
+| `find ft list` | List fungible tokens (`--height`) |
+| `find ft get <token>` | Get fungible token details |
+| `find ft transfers` | List fungible token transfers (`--token`, `--tx-hash`, `--height`) |
+| `find ft holdings <token>` | List fungible token holdings |
+
+#### `nodes`
+
+| Command | Description |
+|---------|-------------|
+| `find nodes list` | List staking nodes (`--role-id`, `--sort-by`) |
+| `find nodes get <node-id>` | Get a node by ID |
+| `find nodes delegation-rewards <node-id>` | List delegation rewards for a node (`--address`, `--sort-by`) |
+
+#### `contracts`
+
+| Command | Description |
+|---------|-------------|
+| `find contracts list` | List contracts |
+| `find contracts by-identifier <identifier>` | List contracts by identifier |
+| `find contracts get <identifier> <id>` | Get a specific contract by identifier and ID |
+
+#### `evm`
+
+| Command | Description |
+|---------|-------------|
+| `find evm tokens` | List EVM tokens (`--type`, `--name`) |
+| `find evm token <address>` | Get an EVM token by contract address |
+| `find evm transactions` | List EVM transactions (`--height`) |
+| `find evm transaction <hash>` | Get an EVM transaction by hash |
+
 ## Testing
 
 Run the test suite:
