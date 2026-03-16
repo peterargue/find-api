@@ -51,6 +51,15 @@ func LoadToken(path string) (token string, exp int64, err error) {
 	return tf.AccessToken, tf.Exp, nil
 }
 
+// ClientOptions returns client options derived from global flags (e.g. --host).
+func ClientOptions() []findapi.ClientOption {
+	var opts []findapi.ClientOption
+	if Flags.Host != "" {
+		opts = append(opts, findapi.WithBaseURL(Flags.Host))
+	}
+	return opts
+}
+
 // MustLoadClient loads the stored token and returns a configured API client.
 // If the token is missing or expired it prints a helpful message and exits.
 func MustLoadClient() *findapi.Client {
@@ -59,5 +68,6 @@ func MustLoadClient() *findapi.Client {
 		fmt.Fprintln(os.Stderr, "Not authenticated. Run: find auth login")
 		os.Exit(1)
 	}
-	return findapi.NewClient("", "", findapi.WithToken(token, exp))
+	opts := append(ClientOptions(), findapi.WithToken(token, exp))
+	return findapi.NewClient("", "", opts...)
 }

@@ -57,7 +57,7 @@ func runLogin(args []string, flags *command.GlobalFlags) (command.Result, error)
 		password = strings.TrimSpace(string(passwordBytes))
 	}
 
-	client := findapi.NewClient(username, password)
+	client := findapi.NewClient(username, password, command.ClientOptions()...)
 	resp, err := client.Auth.GenerateToken(context.Background(), maxTokenDuration)
 	if err != nil {
 		return nil, fmt.Errorf("login failed: %w", err)

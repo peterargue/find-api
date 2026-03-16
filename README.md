@@ -303,6 +303,7 @@ All commands support these flags:
 | `--filter` | | Filter output by field name |
 | `--save` | | Save output to file |
 | `--log` | `info` | Log level: `debug`, `info`, `error`, `none` |
+| `--host` | `https://api.find.xyz` | API host URL |
 
 ### Commands
 

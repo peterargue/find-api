@@ -8,6 +8,7 @@ type GlobalFlags struct {
 	Filter string
 	Save   string
 	Log    string
+	Host   string
 }
 
 // Flags holds the parsed global flags for the current invocation.
@@ -19,4 +20,5 @@ func InitFlags(cmd *cobra.Command) {
 	cmd.PersistentFlags().StringVar(&Flags.Filter, "filter", "", "Filter output by field name")
 	cmd.PersistentFlags().StringVar(&Flags.Save, "save", "", "Save output to file")
 	cmd.PersistentFlags().StringVar(&Flags.Log, "log", "info", "Log level: debug, info, error, none")
+	cmd.PersistentFlags().StringVar(&Flags.Host, "host", "", "API host URL (default: https://api.find.xyz)")
 }
