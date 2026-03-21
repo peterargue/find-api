@@ -15,7 +15,7 @@ A Go client library for the Find Flow blockchain data API. This SDK provides a c
 ## Installation
 
 ```bash
-go get github.com/peterargue/find-api
+go get github.com/peterargue/find-api/cmd/findapi@latest
 ```
 
 ## Quick Start
